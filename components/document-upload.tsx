@@ -383,7 +383,7 @@ WITNESSES: 1. Mr. Rahul Mehta\n                        2. Mr. Kunal Shrma`,
 
               >
                 <div className="w-full min-w-0">
-                  <div className="font-medium text-sm sm:text-base break-words">Sample Rental Agreement</div>
+                  <div className="font-medium text-sm sm:text-base break-words">Sample Loan Agreement</div>
                   <div className="text-xs sm:text-sm text-muted-foreground mt-1 break-words">
                     A typical loan agreement with common clauses
                   </div>
