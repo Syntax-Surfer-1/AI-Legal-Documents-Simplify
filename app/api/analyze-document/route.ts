@@ -1,5 +1,5 @@
 import { google } from "@ai-sdk/google"
-import { generateObject } from "ai"
+import { generateText } from "ai"
 import { z } from "zod"
 
 export const maxDuration = 60
@@ -24,6 +24,22 @@ function truncateText(text: string, maxLength = 8000): string {
   return text.substring(0, maxLength) + "\n\n[Document truncated to fit within API limits]"
 }
 
+function extractJsonFromText(text: string): any {
+  try {
+    // Try to find JSON in the response
+    const jsonMatch = text.match(/\{[\s\S]*\}/)
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0])
+    }
+
+    // If no JSON found, try parsing the entire text
+    return JSON.parse(text)
+  } catch (error) {
+    console.error("Failed to parse JSON from response:", text)
+    throw new Error("Could not parse response as JSON")
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const { documentText, documentType } = await req.json()
@@ -44,13 +60,26 @@ export async function POST(req: Request) {
 
     const truncatedText = truncateText(documentText)
 
-    const { object } = await generateObject({
+    const { text } = await generateText({
       model: google("gemini-2.5-flash"),
-      schema: documentAnalysisSchema,
       messages: [
         {
           role: "system",
-          content: `You are a legal document translator that explains what documents actually say in plain English. Focus on the CONTENT and TERMS of the document, not describing what type of document it is. Break down the actual clauses, conditions, obligations, and rights mentioned in the document.`,
+          content: `You are a legal document translator that explains what documents actually say in plain English. Focus on the CONTENT and TERMS of the document, not describing what type of document it is. Break down the actual clauses, conditions, obligations, and rights mentioned in the document.
+
+IMPORTANT: You must respond with a valid JSON object that matches this exact structure:
+{
+  "summary": "A simple summary of what this document is about in 1-2 sentences",
+  "keyPoints": ["Main point 1", "Main point 2", "etc"],
+  "importantTerms": [
+    {
+      "term": "Term name",
+      "simpleExplanation": "Simple explanation"
+    }
+  ],
+  "thingsToKnow": ["Important thing 1", "Important thing 2", "etc"],
+  "warnings": ["Warning 1", "Warning 2", "etc"]
+}`,
         },
         {
           role: "user",
@@ -63,14 +92,19 @@ Focus on:
 - What rights does each party have?
 - What are the key terms and conditions?
 - What happens in different scenarios (penalties, termination, etc.)?
-- What should someone know before signing or agreeing to this?`,
+- What should someone know before signing or agreeing to this?
+
+Respond with ONLY a valid JSON object matching the required structure.`,
         },
       ],
-      maxOutputTokens: 2000,
+      maxTokens: 2000,
       temperature: 0.1,
     })
 
-    return Response.json({ analysis: object })
+    const parsedResponse = extractJsonFromText(text)
+    const validatedObject = documentAnalysisSchema.parse(parsedResponse)
+
+    return Response.json({ analysis: validatedObject })
   } catch (error) {
     console.error("Error analyzing document:", error)
 
@@ -89,6 +123,15 @@ Focus on:
           {
             error:
               "Google Generative AI API key is missing or invalid. Please check your GOOGLE_GENERATIVE_AI_API_KEY environment variable in Project Settings.",
+          },
+          { status: 500 },
+        )
+      }
+      if (error.message.includes("parse")) {
+        return Response.json(
+          {
+            error:
+              "The AI response could not be processed. Please try again with a shorter document or different content.",
           },
           { status: 500 },
         )

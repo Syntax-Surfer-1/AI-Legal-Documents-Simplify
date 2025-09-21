@@ -192,7 +192,7 @@ export function LegalDocumentAnalyzer() {
               <TabsContent value="chat" className="p-4 sm:p-6 lg:p-8 xl:p-12">
                 {analysis && (
                   <ChatInterface
-                    documentContext={`Document Summary: ${analysis.summary}\n\nKey Points: ${analysis.keyPoints?.join(", ") || ""}\n\nWarnings: ${analysis.warnings?.join(", ") || ""}`}
+                    documentContext={`Full Document Text:\n${documentText}\n\nDocument Analysis:\nSummary: ${analysis.summary}\nKey Points: ${analysis.keyPoints?.join(", ") || ""}\nWarnings: ${analysis.warnings?.join(", ") || ""}`}
                   />
                 )}
               </TabsContent>
