@@ -360,12 +360,27 @@ export function DocumentUpload({ onAnalysis, isAnalyzing }: DocumentUploadProps)
                 className="justify-start h-auto p-3 sm:p-4 text-left w-full border-primary/30 hover:border-primary hover:bg-primary/5 bg-transparent"
                 disabled={isProcessingFile}
                 onClick={() => {
-                  setDocumentText(
-                    `RENTAL AGREEMENT\n\nThis Rental Agreement is entered into on [DATE] between [LANDLORD NAME] ("Landlord") and [TENANT NAME] ("Tenant").\n\nPROPERTY: The Landlord agrees to rent to the Tenant the property located at [ADDRESS].\n\nTERM: This lease shall begin on [START DATE] and end on [END DATE].\n\nRENT: Tenant agrees to pay $[AMOUNT] per month, due on the 1st of each month. Late fees of $50 will be charged for payments received after the 5th.\n\nSECURITY DEPOSIT: Tenant shall pay a security deposit of $[AMOUNT] which will be held by Landlord and may be used to cover damages beyond normal wear and tear.\n\nMAINTENANCE: Tenant is responsible for minor repairs under $100. Landlord is responsible for major repairs and maintenance.\n\nTERMINATION: Either party may terminate this agreement with 30 days written notice. Early termination by Tenant results in forfeiture of security deposit.\n\nPETS: No pets allowed without written consent from Landlord. Pet deposit of $300 required.`,
-                  )
-                  setDocumentType("rental-agreement")
-                  setUploadMethod("paste")
-                }}
+                setDocumentText(
+    `LOAN AGREEMENT\n
+THIS LOAN AGREEMENT is made and executed at Ahmedabad on this 20th day of September, 2025, BY AND BETWEEN Ms. Priya Mehta, daughter of Mr. Suresh Mehta, aged about 45 years, residing at 10, Shanti Villa, Satellite, Ahmedabad, Gujarat, hereinafter referred to as the “Lender” (which expression shall, unless repugnant to the context or meaning thereof, include her heirs, legal representatives, executors, administrators and assigns) of the ONE PART;\n
+AND\n
+Mr. Raj Shah, son of Mr. Mahendra Shah, aged about 38 years, residing at 204, Shree Krupa Apartments, Navrangpura, Ahmedabad, Gujarat, hereinafter referred to as the “Borrower” (which expression shall, unless repugnant to the context or meaning thereof, include his heirs, legal representatives, executors, administrators and assigns) of the OTHER PART.\n
+WHEREAS the Borrower has approached the Lender for a financial accommodation by way of a loan for his lawful business and personal requirements, and the Lender has agreed to grant such financial accommodation on the terms and conditions hereinafter appearing;\n
+NOW THIS AGREEMENT WITNESSETH AS FOLLOWS:\n
+That in pursuance of the said request and in consideration of the mutual covenants herein contained, the Lender has advanced to the Borrower a sum of Rupees Two Lakh Only (₹2,00,000/-), the receipt whereof the Borrower hereby acknowledges and admits. The Borrower hereby covenants and undertakes to repay the said loan amount together with interest thereon at the rate of Ten Percent (10%) per annum, computed on the diminishing balance, within a maximum period of ten months from the date hereof, by way of monthly instalments of Rupees Twenty Thousand (₹20,000/-) each commencing from the First day of November, 2025, and continuing thereafter until the entire principal together with accrued interest is fully repaid.\n
+It is further expressly agreed and declared that in the event of any default or delay in payment of any instalment on the due date, the Borrower shall be liable to pay to the Lender liquidated damages in the nature of penal interest at the rate of Two Percent (2%) per month on the overdue amount, without prejudice to the Lender’s right to demand immediate repayment of the entire outstanding loan amount with accrued interest forthwith.\n
+As security for due repayment of the loan, the Borrower has deposited with the Lender, by way of equitable mortgage, the original Registration Certificate and keys pertaining to his motor vehicle being Honda City Car, Registration No. GJ01-AB-1234, together with an undertaking not to alienate, transfer, hypothecate or encumber the said vehicle in any manner until full and final repayment of the loan amount along with interest thereon. The Lender shall have a lien and first charge on the said collateral security, and in the event of default, shall be entitled to enforce the same in accordance with law without further reference to the Borrower.\n
+The Borrower further covenants that the loan so availed shall not be utilized for any unlawful or illegal purpose and that he shall comply with all statutory requirements, and any breach thereof shall entitle the Lender to forthwith revoke this Agreement and demand immediate repayment.\n
+This Agreement shall be binding upon and enforceable against the Borrower and his legal representatives, heirs, executors and administrators, and shall inure to the benefit of the Lender and her assigns. Any dispute or difference arising out of or in connection with this Agreement shall be subject to the exclusive jurisdiction of the competent Courts at Ahmedabad, Gujarat.\n
+IN WITNESS WHEREOF the parties hereto have executed these presents on the day, month and year first hereinabove written.\n
+SIGNED AND DELIVERED by the within-named Lender, Ms. Priya Mehta ……………………………\n
+SIGNED AND DELIVERED by the within-named Borrower, Mr. Raj Shah ……………………………\n
+WITNESSES: 1. Mr. Rahul Mehta\n                        2. Mr. Kunal Shrma`,
+              )
+              setDocumentType("loan-agreement")
+              setUploadMethod("paste")
+            }}
+
               >
                 <div className="w-full min-w-0">
                   <div className="font-medium text-sm sm:text-base break-words">Sample Rental Agreement</div>
