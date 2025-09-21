@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     const truncatedText = truncateText(documentText)
 
     const { object } = await generateObject({
-      model: google("gemini-2.0-flash-exp"),
+      model: google("gemini-2.5-flash"),
       schema: documentAnalysisSchema,
       messages: [
         {
